@@ -1,0 +1,83 @@
+{% extends 'expenses/base.html' %}
+
+{% block title %}Add Expense{% endblock %}
+
+{% block extra_head %}
+<style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Poppins', sans-serif;
+    }
+    .expense-form {
+      max-width: 600px;
+      margin: 60px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+    h3 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #198754;
+      font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="expense-form">
+
+        <h3>Add New Expense</h3>
+
+        <!-- Show Django success / error messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} mt-2">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Render Django form fields (already styled in forms.py) -->
+            <div class="mb-3">
+              {{ form.title.label_tag }}
+              {{ form.title }}
+            </div>
+
+            <div class="mb-3">
+              {{ form.amount.label_tag }}
+              {{ form.amount }}
+            </div>
+
+            <div class="mb-3">
+              {{ form.date.label_tag }}
+              {{ form.date }}
+            </div>
+
+            <!-- Category FIX -->
+            <div class="mb-3">
+              {{ form.category.label_tag }}
+              {{ form.category }}
+            </div>
+
+            <div class="mb-3">
+              {{ form.description.label_tag }}
+              {{ form.description }}
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Add Expense</button>
+
+            <!-- BACK BUTTON NOW WORKS -->
+            <a href="{% url 'expense_list' %}" class="btn btn-secondary w-100 mt-2">
+                Back
+            </a>
+        </form>
+
+    </div>
+</div>
+{% endblock %}
